@@ -11,7 +11,7 @@ from carddav import PyCardDAV
 from convert import vcf_to_xml
 
 with open(rp('config.yaml')) as fin:
-    config = yaml.full_load(fin)
+    config = yaml.load(fin)
 
 
 def get_contacts():
