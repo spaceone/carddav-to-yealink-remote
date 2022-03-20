@@ -46,7 +46,7 @@ def vcf_to_xml(config, vcf):
                 if itype in map_number_types:
                     ntype = map_number_types[itype]
                 else:
-                    print(f"Warn: unknown type {itype} for {p.value}")
+                    print("Warn: unknown type {itype} for {value}".format(itype=itype, value=p.value))
                     ntype = itype
                 numbers.append((ntype, p.value))
 
@@ -54,7 +54,7 @@ def vcf_to_xml(config, vcf):
             output_counter += 1
 
             if givenname and familyname:
-                name = f"{familyname}, {givenname}"
+                name = "{familyname}, {givenname}".format(familyname=familyname, givenname=givenname)
             elif givenname:
                 name = givenname
             elif familyname:
@@ -63,7 +63,7 @@ def vcf_to_xml(config, vcf):
                 print("Unsupported name format, TODO support me... ")
                 continue
             result += '  <DirectoryEntry>\n'
-            result += f'    <Name>{escape(name)}</Name>\n'
+            result += '    <Name>{name}</Name>\n'.format(name=escape(name))
 
             for n in numbers:
                 ntype, value = n
@@ -73,7 +73,7 @@ def vcf_to_xml(config, vcf):
                     value = value.replace("+", "00", 1)
                 if country_code and value.startswith(country_code):
                     value = value.replace(country_code, "0", 1)
-                result += f'    <Telephone label="{escape(ntype)}">{escape(value)}</Telephone>\n'
+                result += '    <Telephone label="{ntype}">{value}</Telephone>\n'.format(ntype=escape(ntype), value=escape(value))
 
             result += '  </DirectoryEntry>\n'
 

@@ -29,9 +29,9 @@ def request_get():
     global contacts
     ip_addr = request.remote_addr
     if "ip_whitelist" in config and ip_addr not in config["ip_whitelist"]:
-        print(f"Contacts requested by {ip_addr}, but not whitelisted - return 404!")
+        print("Contacts requested by {ip_addr}, but not whitelisted - return 404!".format(ip_addr=ip_addr))
         abort(404)
-    print(f"Contacts requested by {ip_addr}, handling")
+    print("Contacts requested by {ip_addr}, handling".format(ip_addr=ip_addr))
     return Response(contacts, mimetype="text/xml")
 
 
@@ -47,7 +47,7 @@ def update_contacts_loop():
             contacts = get_contacts()
             print("Contacts updated")
         except Exception as e:
-            print(f"Exception while trying to update contacts: {e}")
+            print("Exception while trying to update contacts: {e}".format(e=e))
 
 
 print("Getting initial contacts...")
@@ -57,5 +57,5 @@ Thread(target=update_contacts_loop).start()
 
 host = config["listen_host"]
 port = config["listen_port"]
-print(f"Starting listening on {host}, port {port}")
+print("Starting listening on {host}, port {port}".format(host=host, port=port))
 serve(app, host=host, port=port)
